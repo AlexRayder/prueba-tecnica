@@ -1,0 +1,190 @@
+<div class="container">
+    <div class="titulo">
+      <h1>FORMULARIO DE CONTACTO</h1>
+    </div>
+    <div class="formulario">
+      <div class="unir">
+        <div class="redes-sociales">
+          <div class="direcciones">
+            <div class="correo">
+              <i class="bx bx-envelope"></i>
+              <span>consultas&#64;correo.com</span>
+            </div>
+            <div class="mapa">
+              <i class="bx bx-map"></i>
+              <span>Av.16 de julio Nro 8 - Ciudad - Pais</span>
+            </div>
+            <div class="telefono">
+              <i class="bx bx-phone" style="transform: scaleX(-1);"></i>
+              <div class="telefono-numeros">
+                <span>(01) 3453-654</span>
+                <span>(01) 3233-452</span>
+              </div>
+            </div>
+            <div class="iconos-redes">
+              <div class="redes-icono"><i class="bx bxl-facebook-circle"></i></div>
+              <div class="redes-icono"><i class="bx bxl-twitter"></i></div>
+              <div class="redes-icono"><i class="bx bxl-instagram"></i></div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="contacto">
+          <div class="titulo-contacto">
+            <h2>Contacto</h2>
+          </div>
+  
+          <div class="form">
+            <form (ngSubmit)="AdjuntarFormulario()" #contactForm="ngForm">
+              <div class="contenedor-form">
+                <div class="sexo">
+                  <mat-form-field class="sexo">
+                    <mat-label>Sexo</mat-label>
+                    <mat-select [(ngModel)]="selectedSexo" name="sexo" required>
+                      <mat-option *ngFor="let sexo of sexos" [value]="sexo.value">{{ sexo.label }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="contactForm.controls['sexo']?.invalid && contactForm.controls['sexo']?.touched">
+                      El campo de sexo es obligatorio.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="fecha-nacimiento">
+                  <mat-form-field class="fecha-nacimiento">
+                    <mat-label>Fecha Nacimiento</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      [(ngModel)]="fechaNacimiento"
+                      name="fechaNacimiento"
+                      required
+                    />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error *ngIf="contactForm.controls['fechaNacimiento']?.invalid && contactForm.controls['fechaNacimiento']?.touched">
+                      La fecha de nacimiento es obligatoria.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="nombre">
+                  <mat-form-field class="nombre">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput [(ngModel)]="nombre" name="nombre" required />
+                    <mat-error *ngIf="contactForm.controls['nombre']?.invalid && contactForm.controls['nombre']?.touched">
+                      El nombre es obligatorio.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="apellido">
+                  <mat-form-field class="apellido">
+                    <mat-label>Apellido</mat-label>
+                    <input matInput [(ngModel)]="apellido" name="apellido" required />
+                    <mat-error *ngIf="contactForm.controls['apellido']?.invalid && contactForm.controls['apellido']?.touched">
+                      El apellido es obligatorio.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="email">
+                  <mat-form-field appearance="fill" class="email">
+                    <mat-label>Email</mat-label>
+                    <input
+                      matInput
+                      placeholder="ejemplo@correo.com"
+                      [(ngModel)]="email"
+                      name="email"
+                      #emailInput="ngModel"
+                      required
+                      email
+                    />
+                    <mat-error *ngIf="emailInput.invalid && emailInput.touched">
+                      <span *ngIf="emailInput.errors?.['required']">El email es <strong>obligatorio</strong>.</span>
+                      <span *ngIf="emailInput.errors?.['email']">Por favor, introduce una dirección de correo válida.</span>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="direccion">
+                  <mat-form-field class="direccion">
+                    <mat-label>Dirección</mat-label>
+                    <input
+                      matInput
+                      [(ngModel)]="direccion"
+                      name="direccion"
+                      required
+                    />
+                    <mat-error *ngIf="contactForm.controls['direccion']?.invalid && contactForm.controls['direccion']?.touched">
+                      El campo dirección es obligatorio.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="casa-apartamento">
+                  <mat-form-field class="casa-apartamento">
+                    <mat-label>Casa/Apartamento</mat-label>
+                    <input matInput [(ngModel)]="casaApartamento" name="casaApartamento"   />
+                  </mat-form-field>
+                </div>
+  
+                <div class="pais">
+                  <mat-form-field class="pais">
+                    <mat-label>País</mat-label>
+                    <mat-select [(ngModel)]="selectedPais" name="pais" required (selectionChange)="onPaisChange($event.value)">
+                      <mat-option *ngFor="let pais of paises" [value]="pais.value">{{ pais.label }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="contactForm.controls['pais']?.invalid && contactForm.controls['pais']?.touched">
+                      El campo país es obligatorio.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="departamentos" *ngIf="isColombiaSelected">
+                    <mat-form-field class="departamentos">
+                      <mat-label>Departamento</mat-label>
+                      <mat-select [(ngModel)]="selectedDepartamento" name="departamentos" required>
+                        <mat-option *ngFor="let departamento of departamentos" [value]="departamento.value">
+                          {{ departamento.label }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="contactForm.controls['departamentos']?.invalid && contactForm.controls['departamentos']?.touched">
+                        El campo departamento es obligatorio.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                  
+  
+                <div class="ciudad">
+                  <mat-form-field class="ciudad" [ngStyle]="{'width': isColombiaSelected ? '80%' : '90%'}">
+                    <mat-label>Ciudad</mat-label>
+                    <mat-select [(ngModel)]="selectedCiudad" name="ciudad" required>
+                      <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.value">{{ ciudad.label }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="contactForm.controls['ciudad']?.invalid && contactForm.controls['ciudad']?.touched">
+                      El campo ciudad es obligatorio.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+  
+                <div class="comentario">
+                  <mat-form-field class="comentario">
+                    <mat-label>Comentario</mat-label>
+                    <textarea matInput [(ngModel)]="comentario" name="comentario" required></textarea>
+                    <mat-error *ngIf="contactForm.controls['comentario']?.invalid && contactForm.controls['comentario']?.touched">
+                      El campo comentario es obligatorio.
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              
+              <div class="btn-enviar">
+                <button type="submit">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
