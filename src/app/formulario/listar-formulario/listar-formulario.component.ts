@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UserService } from '../../user.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Usuario } from '../../models/user.model';
-import { MatSort } from '@angular/material/sort'; 
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'; 
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 
@@ -12,14 +12,18 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   templateUrl: './listar-formulario.component.html',
   styleUrls: ['./listar-formulario.component.css'],
-  imports: [MatTableModule, MatPaginatorModule, MatInputModule],
+  imports: [MatTableModule, MatPaginatorModule, MatInputModule, MatSortModule],
 })
-export class ListarFormularioComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'sexo', 'fechaNacimiento', 'nombre', 'apellido', 'email', 'direccion', 'casaApartamento', 'pais', 'departamento', 'ciudad', 'comentario', 'acciones'];
+export class ListarFormularioComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = [
+    'id', 'sexo', 'fechaNacimiento', 'nombre', 'apellido', 'email', 
+    'direccion', 'casaApartamento', 'pais', 'departamento', 'ciudad', 
+    'comentario', 'acciones'
+  ];
   dataSource = new MatTableDataSource<Usuario>([]);
 
-  @ViewChild(MatSort) sort: MatSort; 
-  @ViewChild(MatPaginator) paginator: MatPaginator; 
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -38,7 +42,7 @@ export class ListarFormularioComponent implements OnInit {
             apellido: user.last_name,
             email: user.email,
             direccion: user.addres,
-            casaApartamento:user.casaApartamento,
+            casaApartamento: user.casaApartamento,
             pais: user.country,
             departamento: user.Deparment,
             ciudad: user.City,
@@ -47,16 +51,22 @@ export class ListarFormularioComponent implements OnInit {
           ...localUsers.map((user: any, index: number) => ({
             ...user,
             id: usersFromApi.length + index + 1,
-          }))
+          })),
         ];
-        this.dataSource.sort = this.sort; 
-        this.dataSource.paginator = this.paginator; 
+
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       },
       error => {
         console.error('Error al cargar usuarios:', error);
         alert('Ocurrió un error al cargar los usuarios. Por favor, intenta nuevamente.');
       }
     );
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   applyFilter(event: Event) {

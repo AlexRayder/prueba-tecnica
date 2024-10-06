@@ -8,6 +8,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-formulario',
@@ -128,52 +129,76 @@ export class FormularioComponent {
     return true; 
   }
 
-  AdjuntarFormulario() {
-    if (!this.validarEdad()) {
-      alert('No puedes registrarte porque eres menor de 18 años');
-      return; 
-    }
-
-    if (!this.validarFormulario()) {
-      alert('Por favor, completa todos los campos obligatorios.');
-      return; 
-    }
-
-    let formattedDate: string | null = null;
-    if (this.fechaNacimiento) {
-      const year = this.fechaNacimiento.getFullYear();
-      const month = (this.fechaNacimiento.getMonth() + 1)
-        .toString()
-        .padStart(2, '0');
-      const day = this.fechaNacimiento.getDate().toString().padStart(2, '0');
-      formattedDate = `${year}-${month}-${day}`;
-    }
-
-    const userData = {
-      id: this.userId,
-      nombre: this.nombre,
-      apellido: this.apellido,
-      email: this.email,
-      direccion: this.direccion,
-      casaApartamento:this.casaApartamento,
-      sexo: this.selectedSexo,
-      fechaNacimiento: formattedDate,
-      pais: this.selectedPais,
-      departamento: this.selectedDepartamento,
-      ciudad: this.selectedCiudad,
-      comentario: this.comentario,
-    };
-
-    if (this.userId) {
-      this.userService.updateUser(userData);
-      alert('Usuario actualizado correctamente');
-    } else {
-      this.userService.addUser(userData);
-      alert('Formulario enviado correctamente');
-    }
-    
-    this.router.navigate(['/listar-formulario']);
+AdjuntarFormulario() {
+  if (!this.validarEdad()) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'No puedes registrarte porque eres menor de 18 años',
+    });
+    return; 
   }
+
+  if (!this.validarFormulario()) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Campos incompletos',
+      text: 'Por favor, completa todos los campos obligatorios.',
+    });
+    return; 
+  }
+
+  let formattedDate: string | null = null;
+  if (this.fechaNacimiento) {
+    const year = this.fechaNacimiento.getFullYear();
+    const month = (this.fechaNacimiento.getMonth() + 1)
+      .toString()
+      .padStart(2, '0');
+    const day = this.fechaNacimiento.getDate().toString().padStart(2, '0');
+    formattedDate = `${year}-${month}-${day}`;
+  }
+
+  const userData = {
+    id: this.userId,
+    nombre: this.nombre,
+    apellido: this.apellido,
+    email: this.email,
+    direccion: this.direccion,
+    casaApartamento: this.casaApartamento,
+    sexo: this.selectedSexo,
+    fechaNacimiento: formattedDate,
+    pais: this.selectedPais,
+    departamento: this.selectedDepartamento,
+    ciudad: this.selectedCiudad,
+    comentario: this.comentario,
+  };
+
+  if (this.userId) {
+    this.userService.updateUser(userData);
+    Swal.fire({
+      icon: 'success',
+      title: 'Usuario actualizado',
+      text: 'Usuario actualizado correctamente',
+      timer: 2000,
+      timerProgressBar: true,
+    }).then(() => {
+      this.router.navigate(['/listar-formulario']);
+    });
+  } else {
+    this.userService.addUser(userData);
+    Swal.fire({
+      icon: 'success',
+      title: 'Formulario enviado',
+      text: 'Formulario enviado correctamente',
+      timer: 2000,
+      timerProgressBar: true,
+    }).then(() => {
+      this.router.navigate(['/listar-formulario']);
+    });
+  }
+}
+
+  
 
   populateForm(user: any) {
     this.nombre = user.nombre;

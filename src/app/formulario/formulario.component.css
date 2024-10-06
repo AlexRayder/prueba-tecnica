@@ -36,7 +36,7 @@
   flex-direction: column;
   justify-content: center;
   border-radius: 5px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra opcional para darle un efecto de profundidad */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .titulo-contacto h2 {
@@ -66,15 +66,14 @@
 .pais,
 .departamentos,
 .ciudad {
-  flex: 1 1 48%; /* Campos que ocupan 48% del ancho */
+  flex: 1 1 48%; 
   margin-bottom: 5px;
 }
 
-/* Campos que deben ocupar todo el ancho */
 .email,
 .direccion,
 .comentario {
-  flex: 1 1 100%; /* Hacer que estos campos ocupen el 100% del ancho */
+  flex: 1 1 100%; 
 }
 
 mat-form-field.sexo,
@@ -90,9 +89,9 @@ mat-form-field.pais {
 mat-form-field.email,
 mat-form-field.direccion,
 mat-form-field.comentario {
-  flex: 1 1 100%; /* Hacer que estos campos ocupen el 100% del ancho */
-  width: 90%; /* Asegúrate de que el ancho sea 100% */
-  margin-bottom: 20px; /* Espacio inferior opcional */
+  flex: 1 1 100%; 
+  width: 90%; 
+  margin-bottom: 20px; 
 }
 
 .btn-enviar {
@@ -117,20 +116,20 @@ button:hover {
 }
 
 .unir {
-  display: flex; /* Usamos flexbox para alinear redes y contacto */
-  justify-content: space-between; /* Espacio entre las secciones */
-  width: 100%; /* Asegúrate de que ocupe el ancho completo */
+  display: flex; 
+  justify-content: space-between; 
+  width: 100%; 
 }
 
 
 .contacto {
-  width: 48%; /* Ancho para la sección de contacto */
+  width: 48%;
   padding: 20px;
 }
 
 .direcciones,
 .iconos-redes {
-  margin-bottom: 10px; /* Espacio entre las direcciones y los iconos */
+  margin-bottom: 10px; 
 }
 
 .redes-sociales {
@@ -155,7 +154,7 @@ button:hover {
   .correo i,
   .mapa i,
   .telefono i {
-    margin-right: 10px; /* Espacio entre el ícono y el texto solo para correo, dirección y teléfono */
+    margin-right: 10px; 
   }
   
   
@@ -185,7 +184,7 @@ button:hover {
 }
 
 .telefono-numeros span {
-    margin-bottom: 10px; /* Espacio entre cada número de teléfono */
+    margin-bottom: 10px; 
 }
 
   

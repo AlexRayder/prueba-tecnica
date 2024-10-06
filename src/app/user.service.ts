@@ -10,6 +10,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+
   // Obtener usuarios desde la API
   getUsers(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
@@ -26,10 +27,10 @@ export class UserService {
   // Actualizar usuario en localStorage
   updateUser(updatedUser: any): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const index = users.findIndex((user: any) => user.email === updatedUser.email); // Suponiendo que el email es único
+    const index = users.findIndex((user: any) => user.email === updatedUser.email); 
     if (index !== -1) {
-      users[index] = updatedUser; // Actualiza el usuario
-      localStorage.setItem('users', JSON.stringify(users)); // Guarda los cambios
+      users[index] = updatedUser; 
+      localStorage.setItem('users', JSON.stringify(users)); 
     }
   }
 }
